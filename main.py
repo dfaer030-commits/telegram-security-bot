@@ -1,4 +1,29 @@
 import os
+from flask import Flask
+from threading import Thread
+import logging
+
+# Создаем простой Flask сервер для health check
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return 'Bot is running', 200
+
+@app.route('/health')
+def health():
+    return 'OK', 200
+
+def run_web():
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port, debug=False)
+
+# Запускаем Flask в отдельном потоке
+web_thread = Thread(target=run_web, daemon=True)
+web_thread.start()
+
+# Дальше ваш основной код бота...
+import os
 import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
