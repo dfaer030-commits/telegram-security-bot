@@ -7,6 +7,6 @@ services:
     startCommand: python main.py
     envVars:
       - key: BOT_TOKEN
-        sync: false
+        sync: true
       - key: HF_API_KEY
-        sync: false
+        sync: true
